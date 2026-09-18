@@ -1,21 +1,28 @@
+import Image from "next/image";
+import DragScroll from "@/components/DragScroll";
+import cardArt from "@/images/justpulled.png";
+
 type Pull = {
   card: string;
   set?: string;
-  hp?: string;
+  badge: string;
   price: string;
   user: string;
   time: string;
   sealed?: boolean;
-  gradient: string;
 };
 
 const pulls: Pull[] = [
-  { card: "Espeon ex", hp: "270", price: "€247", user: "Nat***", time: "10m ago", gradient: "from-fuchsia-400 to-purple-700" },
-  { card: "Virizion", hp: "120", price: "€54", user: "Igo***", time: "2h ago", gradient: "from-emerald-400 to-teal-700" },
-  { card: "Tony Tony Chopper", set: "EB02", price: "€3,086", user: "sealed", time: "", sealed: true, gradient: "from-rose-500 to-red-800" },
-  { card: "Mega Zygarde ex", hp: "370", price: "€65", user: "Pat***", time: "5h ago", gradient: "from-lime-400 to-green-700" },
-  { card: "Mega Charizard ex", hp: "360", price: "€363", user: "Ric***", time: "5h ago", gradient: "from-amber-400 to-orange-700" },
-  { card: "Nico Robin", set: "EB03", price: "€2,030", user: "sealed", time: "", sealed: true, gradient: "from-indigo-400 to-blue-800" },
+  { card: "Espeon ex", badge: "270", price: "€247", user: "Nat***", time: "10m ago" },
+  { card: "Virizion", badge: "120", price: "€54", user: "Igo***", time: "2h ago" },
+  { card: "Tony Tony Chopper", set: "EB02", badge: "5000", price: "€3,086", user: "sealed", time: "", sealed: true },
+  { card: "Mega Zygarde ex", badge: "370", price: "€65", user: "Pat***", time: "5h ago" },
+  { card: "Mega Charizard ex", badge: "360", price: "€363", user: "Ric***", time: "5h ago" },
+  { card: "Nico Robin", set: "EB03", badge: "8000", price: "€2,030", user: "sealed", time: "", sealed: true },
+  { card: "Gardevoir ex", badge: "310", price: "€128", user: "Sam***", time: "20m ago" },
+  { card: "Roronoa Zoro", set: "OP12", badge: "4200", price: "€1,955", user: "sealed", time: "", sealed: true },
+  { card: "Lucario ex", badge: "280", price: "€96", user: "Lea***", time: "1h ago" },
+  { card: "Mewtwo ex", badge: "220", price: "€312", user: "Tom***", time: "3h ago" },
 ];
 
 export default function JustPulled() {
@@ -32,25 +39,34 @@ export default function JustPulled() {
         </span>
       </div>
 
-      <div className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+      <DragScroll className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
         {pulls.map((pull, i) => (
           <div key={i} className="w-36 shrink-0 sm:w-40">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-border">
-              <div className={`absolute inset-0 bg-gradient-to-br ${pull.gradient}`} />
-              <div className="absolute inset-0 bg-black/20" />
-              {pull.hp && (
-                <span className="absolute right-2 top-2 rounded-full bg-black/50 px-1.5 py-0.5 text-[10px] font-bold text-white">
-                  {pull.hp}
+            <div className="relative aspect-[5/7] overflow-hidden rounded-xl border border-border transition-transform duration-300 ease-out hover:-translate-y-2 hover:shadow-xl">
+              <Image
+                src={cardArt}
+                alt={pull.card}
+                fill
+                sizes="160px"
+                className="object-cover"
+              />
+
+              {pull.sealed && (
+                <span className="absolute left-2 top-2 rounded bg-gold px-1.5 py-0.5 text-[8px] font-extrabold uppercase tracking-wide text-black">
+                  Still sealed
                 </span>
               )}
-              {pull.sealed && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="rotate-[-12deg] rounded border-2 border-white/70 px-3 py-1 text-xs font-extrabold tracking-widest text-white/90">
-                    STILL SEALED
-                  </span>
-                </div>
-              )}
-              <div className="absolute inset-x-0 bottom-0 p-2.5">
+              <span className="absolute right-2 top-2 rounded-full bg-black/60 px-1.5 py-0.5 text-[10px] font-bold text-white ring-1 ring-white/10">
+                {pull.badge}
+              </span>
+
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <span className="-rotate-12 text-2xl font-extrabold uppercase tracking-widest text-white/80 drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
+                  Sample
+                </span>
+              </div>
+
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent p-2.5 pt-6">
                 <p className="truncate text-xs font-extrabold leading-tight text-white drop-shadow">
                   {pull.card}
                 </p>
@@ -63,7 +79,7 @@ export default function JustPulled() {
             </div>
           </div>
         ))}
-      </div>
+      </DragScroll>
     </section>
   );
 }

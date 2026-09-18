@@ -107,26 +107,26 @@ export default function CoinsModal() {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/70 px-4 py-8 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/70 px-4 py-6 backdrop-blur-sm"
       onClick={close}
     >
       <div
-        className="relative w-full max-w-4xl overflow-y-auto rounded-2xl border border-border bg-panel p-6 shadow-2xl sm:p-8"
+        className="relative w-full max-w-4xl overflow-y-auto rounded-2xl border border-border bg-panel p-5 shadow-2xl sm:p-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl font-extrabold">Add Gemma coins</h2>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-xl font-extrabold">Add Gemma coins</h2>
           <button
             type="button"
             onClick={close}
             aria-label="Close"
             className="rounded-full p-1.5 text-zinc-500 hover:bg-panel-2 hover:text-zinc-200"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
           {packages.map((p, i) => {
             const isSelected = i === selected;
             return (
@@ -134,7 +134,7 @@ export default function CoinsModal() {
                 key={i}
                 type="button"
                 onClick={() => setSelected(i)}
-                className={`relative overflow-hidden rounded-xl border bg-panel-2 p-4 text-left transition-colors ${
+                className={`relative overflow-hidden rounded-xl border bg-panel-2 p-3 text-left transition-colors ${
                   isSelected
                     ? "border-accent ring-2 ring-accent"
                     : p.highlight
@@ -144,7 +144,7 @@ export default function CoinsModal() {
               >
                 {p.badge && (
                   <span
-                    className={`absolute left-0 top-0 rounded-br-lg px-2 py-1 text-[10px] font-extrabold tracking-wide ${
+                    className={`absolute left-0 top-0 rounded-br-lg px-2 py-0.5 text-[10px] font-extrabold tracking-wide ${
                       p.highlight
                         ? "bg-gradient-to-r from-accent to-accent-2 text-white"
                         : "bg-panel text-zinc-300"
@@ -153,30 +153,30 @@ export default function CoinsModal() {
                     {p.badge}
                   </span>
                 )}
-                <div className="mt-5 flex items-center gap-1.5 text-lg font-extrabold">
-                  <Gem size={16} className="text-accent-2" />
+                <div className="mt-4 flex items-center gap-1.5 text-base font-extrabold">
+                  <Gem size={15} className="text-accent-2" />
                   {p.coins.toLocaleString()}
                 </div>
-                <div className="mt-1 flex items-center gap-1.5 text-sm">
+                <div className="mt-0.5 flex items-center gap-1.5 text-sm">
                   {p.originalPrice && (
                     <span className="text-muted line-through">{p.originalPrice}</span>
                   )}
                   <span className="font-bold text-zinc-100">{p.price}</span>
                 </div>
-                <p className="mt-1 text-xs text-muted">{p.sub}</p>
+                <p className="mt-0.5 text-xs text-muted">{p.sub}</p>
                 {p.note && (
-                  <p className="mt-1 text-xs font-semibold text-accent-2">{p.note}</p>
+                  <p className="mt-0.5 text-xs font-semibold text-accent-2">{p.note}</p>
                 )}
               </button>
             );
           })}
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_320px]">
-          <div className="flex min-h-[260px] flex-col items-center justify-center gap-3 rounded-xl border border-border bg-bg">
+        <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-[1fr_320px]">
+          <div className="flex min-h-[208px] flex-col items-center justify-center gap-3 rounded-xl border border-border bg-bg">
             {user ? (
               <>
-                <Loader2 size={28} className="animate-spin text-accent" />
+                <Loader2 size={24} className="animate-spin text-accent" />
                 <p className="text-sm text-muted">Opening the secure payment form…</p>
               </>
             ) : (
@@ -196,7 +196,7 @@ export default function CoinsModal() {
             )}
           </div>
 
-          <div className="flex flex-col justify-between rounded-xl border border-border bg-panel-2 p-5">
+          <div className="flex flex-col justify-between rounded-xl border border-border bg-panel-2 p-4">
             <div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted">Coins</span>
@@ -205,18 +205,18 @@ export default function CoinsModal() {
                   {pkg.coins.toLocaleString()}
                 </span>
               </div>
-              <div className="mt-2 flex items-center justify-between text-sm">
+              <div className="mt-1.5 flex items-center justify-between text-sm">
                 <span className="text-muted">Packs to rip</span>
                 <span className="font-bold">{pkg.packsToRip}</span>
               </div>
-              <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
+              <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
                 <span className="text-base font-extrabold">Total</span>
                 <span className="text-lg font-extrabold">{pkg.price}</span>
               </div>
               <p className="text-xs text-muted">Credited instantly</p>
             </div>
 
-            <div className="mt-6 border-t border-border pt-4">
+            <div className="mt-4 border-t border-border pt-3">
               <p className="flex items-center gap-1.5 text-xs font-semibold text-zinc-300">
                 <Lock size={12} />
                 Payments handled by <span className="font-extrabold text-white">Stripe</span>
@@ -231,7 +231,7 @@ export default function CoinsModal() {
                   </span>
                 ))}
               </div>
-              <p className="mt-3 text-[11px] leading-relaxed text-muted">
+              <p className="mt-2 text-[11px] leading-relaxed text-muted">
                 Your card details are entered on Stripe and never reach our servers.
                 All traffic is encrypted (TLS).
               </p>

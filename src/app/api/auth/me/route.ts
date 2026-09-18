@@ -1,25 +1,8 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import { findUserById, toPublicUser } from "@/lib/db";
-import { SESSION_COOKIE, verifySession } from "@/lib/auth";
+import { toPublicUser } from "@/lib/db";
+import { getSessionUser } from "@/lib/session";
 
 export async function GET() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get(SESSION_COOKIE)?.value;
-
-  if (!token) {
-    return NextResponse.json({ user: null });
-  }
-
-  const payload = verifySession(token);
-  if (!payload) {
-    return NextResponse.json({ user: null });
-  }
-
-  const user = await findUserById(payload.sub);
-  if (!user) {
-    return NextResponse.json({ user: null });
-  }
-
-  return NextResponse.json({ user: toPublicUser(user) });
+  const user = await getSessionUser();
+  return NextResponse.json({ user: user ? toPublicUser(user) : null });
 }

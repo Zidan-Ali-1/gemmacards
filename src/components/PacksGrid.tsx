@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Gem } from "lucide-react";
+import pokemonArt from "@/images/pokemon.png";
 
 type Game = "pokemon" | "onepiece";
 
@@ -125,10 +127,14 @@ export default function PacksGrid() {
         {visible.map((pack) => (
           <div key={pack.name} className="flex flex-col">
             <div className="group relative aspect-[3/4] overflow-hidden rounded-2xl border border-border">
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${pack.gradient} opacity-90 transition-transform duration-300 group-hover:scale-105`}
+              <Image
+                src={pokemonArt}
+                alt={pack.name}
+                fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-black/25" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/30" />
               <span className="absolute left-3 top-3 rounded-md bg-black/50 px-1.5 py-0.5 text-[10px] font-bold text-white/90">
                 6+
               </span>

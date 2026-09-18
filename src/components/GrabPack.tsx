@@ -1,4 +1,8 @@
+import Image from "next/image";
 import { ArrowRight, Gem } from "lucide-react";
+import DragScroll from "@/components/DragScroll";
+import packArt from "@/images/dri.webp";
+import sampleCard from "@/images/pokemon.png";
 
 type Pack = {
   name: string;
@@ -54,6 +58,34 @@ const packs: Pack[] = [
     topCard: "€520",
     gradient: "from-emerald-500 via-teal-600 to-cyan-700",
   },
+  {
+    name: "Twilight Masquerade",
+    game: "pokemon",
+    coins: 500,
+    topCard: "€412",
+    gradient: "from-violet-500 via-purple-600 to-indigo-800",
+  },
+  {
+    name: "Obsidian Flames",
+    game: "pokemon",
+    coins: 500,
+    topCard: "€289",
+    gradient: "from-orange-500 via-red-600 to-rose-800",
+  },
+  {
+    name: "Wings of the Captain",
+    game: "onepiece",
+    coins: 500,
+    topCard: "€520",
+    gradient: "from-cyan-500 via-blue-600 to-blue-800",
+  },
+  {
+    name: "Two Legends",
+    game: "onepiece",
+    coins: 500,
+    topCard: "€1,890",
+    gradient: "from-yellow-400 via-amber-600 to-red-700",
+  },
 ];
 
 export default function GrabPack() {
@@ -73,29 +105,44 @@ export default function GrabPack() {
         </a>
       </div>
 
-      <div className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+      <DragScroll className="-mx-4 flex gap-4 overflow-x-auto px-4 pt-10 pb-2 sm:mx-0 sm:px-0">
         {packs.map((pack) => (
           <div key={pack.name} className="w-36 shrink-0 sm:w-40">
-            <div className="group relative aspect-[3/4] overflow-hidden rounded-xl border border-border">
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${pack.gradient} opacity-90 transition-transform group-hover:scale-105`}
-              />
-              <div className="absolute inset-0 bg-black/25" />
-              {pack.isNew && (
-                <span className="absolute left-2 top-2 rounded-full bg-gold px-2 py-0.5 text-[10px] font-extrabold text-black">
-                  NEW
-                </span>
-              )}
-              <span className="absolute right-2 top-2 rounded-full bg-black/40 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white/80">
-                {pack.game === "pokemon" ? "Pokémon" : "One Piece"}
-              </span>
-              <div className="absolute inset-x-0 bottom-0 p-3">
-                <p className="text-sm font-extrabold leading-tight text-white drop-shadow">
-                  {pack.name}
-                </p>
+            <div className="group relative aspect-[5/9]">
+              <div className="pointer-events-none absolute left-1/2 top-0 z-0 h-[80%] w-[62%] -translate-x-1/2 translate-y-3 scale-90 rotate-0 overflow-hidden rounded-md border border-white/20 opacity-0 shadow-2xl transition-all duration-500 ease-out group-hover:-translate-y-10 group-hover:rotate-[-12deg] group-hover:scale-100 group-hover:opacity-100">
+                <Image
+                  src={sampleCard}
+                  alt="Sample card"
+                  fill
+                  sizes="120px"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+                  <span className="-rotate-12 rounded bg-red-600 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-widest text-white shadow-md">
+                    Sample
+                  </span>
+                </div>
+              </div>
+
+              <div className="relative z-10 h-full w-full overflow-hidden rounded-md">
+                <Image
+                  src={packArt}
+                  alt={pack.name}
+                  fill
+                  sizes="160px"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                {pack.isNew && (
+                  <span className="absolute left-1 top-1 rounded-full bg-gold px-2 py-0.5 text-[10px] font-extrabold text-black">
+                    NEW
+                  </span>
+                )}
               </div>
             </div>
-            <div className="mt-2 flex items-center justify-between text-xs">
+            <p className="mt-2 text-sm font-extrabold leading-tight text-white">
+              {pack.name}
+            </p>
+            <div className="mt-1 flex items-center justify-between text-xs">
               <span className="flex items-center gap-1 font-semibold text-accent-2">
                 <Gem size={12} />
                 {pack.coins.toLocaleString()}
@@ -106,7 +153,7 @@ export default function GrabPack() {
             </div>
           </div>
         ))}
-      </div>
+      </DragScroll>
     </section>
   );
 }

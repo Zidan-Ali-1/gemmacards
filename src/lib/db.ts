@@ -9,6 +9,8 @@ export type User = {
   passwordHash: string;
   coins: number;
   createdAt: string;
+  lastDailyClaim?: string;
+  lastWeeklyClaim?: string;
 };
 
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -69,6 +71,18 @@ export async function createUser(input: {
   users.push(user);
   await writeUsers(users);
   return user;
+}
+
+export async function updateUser(
+  id: string,
+  patch: Partial<Pick<User, "coins" | "lastDailyClaim" | "lastWeeklyClaim">>
+): Promise<User | undefined> {
+  const users = await readUsers();
+  const index = users.findIndex((u) => u.id === id);
+  if (index === -1) return undefined;
+  users[index] = { ...users[index], ...patch };
+  await writeUsers(users);
+  return users[index];
 }
 
 export function toPublicUser(user: User) {

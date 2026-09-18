@@ -30,6 +30,7 @@ type AuthContextValue = {
     ageConfirmed: boolean
   ) => Promise<AuthResult>;
   logout: () => Promise<void>;
+  updateUser: (user: PublicUser) => void;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -101,7 +102,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, register, logout, updateUser: setUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
