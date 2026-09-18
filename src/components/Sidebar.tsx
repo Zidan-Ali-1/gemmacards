@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Home,
   PackageOpen,
@@ -22,12 +24,11 @@ type NavItem = {
   label: string;
   icon: LucideIcon;
   href: string;
-  active?: boolean;
 };
 
 const navItems: NavItem[] = [
-  { label: "Home", icon: Home, href: "/", active: true },
-  { label: "Rip packs", icon: PackageOpen, href: "/rip-packs" },
+  { label: "Home", icon: Home, href: "/" },
+  { label: "Rip packs", icon: PackageOpen, href: "/packs" },
   { label: "Your packs", icon: Copy, href: "/your-packs" },
   { label: "Binder", icon: BookOpen, href: "/binder" },
   { label: "Swap", icon: ArrowLeftRight, href: "/swap" },
@@ -43,23 +44,28 @@ const navItems: NavItem[] = [
 ];
 
 export default function Sidebar() {
+  const pathname = usePathname();
+
   return (
     <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] w-60 shrink-0 overflow-y-auto border-r border-border px-3 py-4 lg:block">
       <nav className="flex flex-col gap-0.5">
-        {navItems.map(({ label, icon: Icon, href, active }) => (
-          <a
-            key={label}
-            href={href}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
-              active
-                ? "bg-panel-2 font-semibold text-white"
-                : "text-zinc-400 hover:bg-panel-2 hover:text-zinc-100"
-            }`}
-          >
-            <Icon size={18} strokeWidth={2} />
-            {label}
-          </a>
-        ))}
+        {navItems.map(({ label, icon: Icon, href }) => {
+          const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+          return (
+            <Link
+              key={label}
+              href={href}
+              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
+                active
+                  ? "bg-panel-2 font-semibold text-white"
+                  : "text-zinc-400 hover:bg-panel-2 hover:text-zinc-100"
+              }`}
+            >
+              <Icon size={18} strokeWidth={2} />
+              {label}
+            </Link>
+          );
+        })}
       </nav>
     </aside>
   );
